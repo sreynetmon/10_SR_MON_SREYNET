@@ -113,3 +113,85 @@ The default settings are defined in `app/config.py`:
 Place plain-text (`.txt`) documents in the `data/` directory. The index is
 rebuilt when the application starts, and the generated ChromaDB data is stored
 in `chroma_db/`.
+
+## Tesing
+
+Q1. How to Configure Email Settings?
+Retrieved Chunks
+------------------------------------------------------------
+--- Chunk 1 ---
+Source: 001_Setting_Up_a_Mobile_Device_for_Company_Email.txt
+Chunk index: 1
+Distance: 0.5464834570884705
+--- Chunk 2 ---
+Source: 001_Setting_Up_a_Mobile_Device_for_Company_Email.txt
+Chunk index: 0
+Distance: 0.6672008633613586
+--- Chunk 3 ---
+Source: 001_Setting_Up_a_Mobile_Device_for_Company_Email.txt
+Chunk index: 3
+Distance: 0.6922661662101746
+--- Chunk 4 ---
+Source: 001_Setting_Up_a_Mobile_Device_for_Company_Email.txt
+Chunk index: 2
+Distance: 0.7083842754364014
+
+Answer
+------------------------------------------------------------
+To configure email settings, follow these steps:
+
+1. In the email account settings, select the "Advanced" or "Security" option.
+2. Ensure that the "Use SSL/TLS" or "Use secure connection" option is enabled.
+3. Set the authentication method to "Username and Password" or "Domain\Username".
+4. If prompted, enter your company's email domain (e.g., company.com).
+
+Q2. How to Install the VPN Client?
+Retrieved Chunks
+------------------------------------------------------------
+--- Chunk 1 ---
+Source: 003_Configuring_VPN_Access_for_Remote_Workers.txt
+Chunk index: 1
+Distance: 0.420489639043808
+--- Chunk 2 ---
+Source: 003_Configuring_VPN_Access_for_Remote_Workers.txt
+Chunk index: 0
+Distance: 0.6163831949234009
+--- Chunk 3 ---
+Source: 003_Configuring_VPN_Access_for_Remote_Workers.txt
+Chunk index: 2
+Distance: 0.7575199604034424
+--- Chunk 4 ---
+Source: 003_Configuring_VPN_Access_for_Remote_Workers.txt
+Chunk index: 3
+Distance: 0.782789945602417
+Answer
+------------------------------------------------------------
+[1] Source: 003_Configuring_VPN_Access_for_Remote_Workers.txt
+
+To install the VPN client, follow these steps:
+
+1. Go to the company's software portal and download the VPN client software.
+2. Run the installer and follow the prompts to install the software.
+
+Q3. What is LLM?
+Retrieved Chunks
+------------------------------------------------------------
+--- Chunk 1 ---
+Source: 004_Troubleshooting_Issues_with_Microsoft_Office.txt
+Chunk index: 4
+Distance: 1.226395606994629
+--- Chunk 2 ---
+Source: 004_Troubleshooting_Issues_with_Microsoft_Office.txt
+Chunk index: 0
+Distance: 1.239336609840393
+--- Chunk 3 ---
+Source: 001_Setting_Up_a_Mobile_Device_for_Company_Email.txt
+Chunk index: 0
+Distance: 1.2457773685455322
+--- Chunk 4 ---
+Source: 003_Configuring_VPN_Access_for_Remote_Workers.txt
+Chunk index: 0
+Distance: 1.2961466312408447
+Answer
+------------------------------------------------------------
+I don't have enough information in the documents to answer that.
