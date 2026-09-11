@@ -1,104 +1,115 @@
-# Baseline Chat-with-Documents
+# Chat with Documents
 
-A minimal, hands-on **Retrieval-Augmented Generation (RAG)** application built with Python, Ollama, and ChromaDB.
+A local Retrieval-Augmented Generation (RAG) application that answers questions
+about text documents using Ollama and ChromaDB.
 
-This project implements a local **Naive RAG pipeline** that loads documents, splits them into chunks, creates embeddings, stores them in ChromaDB, retrieves relevant chunks, and generates answers using a local LLM.
+## Overview
 
----
+### What is RAG?
 
-## 1. What is RAG?
+Retrieval-Augmented Generation (RAG) gives a language model relevant
+information from external documents before it generates an answer. This
+application uses a local RAG pipeline:
 
-**RAG (Retrieval-Augmented Generation)** is a technique that allows an LLM to answer questions using information from external documents.
+1. Load documents from `data/`.
+2. Split the documents into overlapping chunks.
+3. Create embeddings with Ollama.
+4. Store the chunks and embeddings in ChromaDB.
+5. Retrieve the most relevant chunks for a question.
+6. Generate an answer with a local language model.
 
-Instead of relying only on the knowledge already learned by the LLM, RAG retrieves relevant information from documents and provides it to the LLM as context.
-
-The pipeline is:
+### Pipeline
 
 ```text
-Documents
-    |
-    v
-Ingestion
-    |
-    v
-Chunking
-    |
-    v
-Embeddings
-    |
-    v
-ChromaDB
-    |
-    v
-Retrieval
-    |
-    v
-Local LLM
-    |
-    v
-Answer
+Documents -> Ingestion -> Chunking -> Embeddings -> ChromaDB
+                                                        |
+                                                        v
+Question -> Retrieval -> Local LLM -> Answer
+```
 
---
+## Project Structure
 
-## 2. Project Structure
+```text
 chat-with-document-app/
-│
 ├── app/
-│   ├── chunking.py
-│   ├── config.py
-│   ├── embeddings.py
-│   ├── generator.py
-│   ├── ingestion.py
-│   ├── main.py
-│   ├── pipeline.py
-│   ├── retriever.py
-│   └── vector_store.py
-│
-├── data/
-│   ├── document1.txt
-│   ├── document2.txt
-│   ├── document3.txt
-│   └── ...
-│
+│   ├── chunking.py       # Splits documents into overlapping chunks
+│   ├── config.py         # Models and pipeline settings
+│   ├── embeddings.py     # Creates document embeddings
+│   ├── generator.py      # Generates answers with the local LLM
+│   ├── ingestion.py      # Loads text documents
+│   ├── main.py           # Command-line application entry point
+│   ├── pipeline.py       # Builds the index and answers questions
+│   ├── retriever.py      # Retrieves relevant document chunks
+│   └── vector_store.py   # Stores and queries ChromaDB
+├── data/                 # Source text documents
+├── chroma_db/            # Local ChromaDB data
 ├── README.md
-├── reflection.md
-├── .gitignore
 ├── pyproject.toml
 └── poetry.lock
+```
 
---
+## Requirements
 
-## 3. Prerequisites
+### Python
 
-1. Ollama (local LLM server)
-Ollama runs LLMs locally on your machine. Install it from ollama.com, then pull the two models this app needs:
+- Python 3.14 or newer
+- Poetry
 
-ollama pull nomic-embed-text   # embedding model (Stage 2 & 3)
-ollama pull qwen3:8b           # generation model (Stage 4)
-Verify Ollama is running:
+### Ollama
 
-ollama list   # should show both models
-2. Poetry (Python package manager)
-Poetry manages Python dependencies cleanly. Install it once:
+Install [Ollama](https://ollama.com/) and make sure it is running. Pull the
+models used by the application:
 
-pipx install poetry
+```bash
+ollama pull nomic-embed-text
+ollama pull llama3.2:3b
+```
 
-Setup
-cd rag-baseline-app
-poetry install 
+Verify that both models are available:
 
---
+```bash
+ollama list
+```
 
-## 4. Chunking Strategy
+## Installation
 
-The project uses:
+Run these commands from the project root:
 
-CHUNK_SIZE = 800
-CHUNK_OVERLAP = 120
+```bash
+poetry install
+```
 
-A chunk size of 800 characters keeps each retrieved section focused while
-still providing enough context for the LLM.
+## Usage
 
-A 120-character overlap helps preserve context between neighboring chunks
-and reduces the chance of losing information when an important sentence or
-idea crosses a chunk boundary.
+Start the interactive chat application with:
+
+```bash
+poetry run python -m app.main
+```
+
+The application builds an index from the files in `data/`, then prompts for
+questions. Type `exit` to close the application.
+
+## Configuration
+
+The default settings are defined in `app/config.py`:
+
+### Models
+
+- Embedding model: `nomic-embed-text`
+- Generation model: `llama3.2:3b`
+
+### Chunking
+
+- Chunk size: `800` characters
+- Chunk overlap: `120` characters
+
+### Retrieval
+
+- Retrieved chunks per question: `4`
+
+## Data
+
+Place plain-text (`.txt`) documents in the `data/` directory. The index is
+rebuilt when the application starts, and the generated ChromaDB data is stored
+in `chroma_db/`.
